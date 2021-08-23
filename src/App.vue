@@ -1,12 +1,34 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Home</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID
+
+export default {
+  name: 'App',
+  mounted () {
+    const vm = this
+
+    window.extAsyncInit = function () {
+      const MessengerExtensions = window.MessengerExtensions
+      MessengerExtensions.getContext(FACEBOOK_APP_ID,
+        function success (threadContext) {
+          vm.$store.dispatch('threadContext/setThreadContext', threadContext)
+        },
+        function error (err) {
+          console.error(err)
+        }
+      )
+    }
+  }
+}
+</script>
 
 <style>
 #app {

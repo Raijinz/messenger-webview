@@ -1,18 +1,25 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p>Thread ID: {{ tid }}</p>
+    <p>Thread type: {{ threadType }}</p>
+    <p>Page-Scoped ID: {{ psid }}</p>
+    <p>Signed request: {{ signedRequest }}</p>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  computed: {
+    ...mapState('threadContext', {
+      tid: state => state.tid,
+      threadType: state => state.threadType,
+      psid: state => state.psid,
+      signedRequest: state => state.signedRequest
+    })
   }
 }
 </script>
