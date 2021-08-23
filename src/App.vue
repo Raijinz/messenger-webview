@@ -38,7 +38,7 @@ export default {
 
       MessengerExtensions.getSupportedFeatures(
         function success (result) {
-          vm.supportFeatures = result
+          vm.supportFeatures = result.supported_features
           console.log(result)
         },
         function error (err) {
