@@ -43,6 +43,7 @@ export default {
         },
         function error (err) {
           vm.error = err
+          console.log(err)
         }
       )
 
@@ -53,6 +54,7 @@ export default {
         },
         function error (err) {
           vm.error = err
+          console.log(err)
         }
       )
     }
