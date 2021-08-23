@@ -39,6 +39,7 @@ export default {
       MessengerExtensions.getSupportedFeatures(
         function success (result) {
           vm.supportFeatures = result
+          console.log(result)
         },
         function error (err) {
           vm.error = err
@@ -48,6 +49,7 @@ export default {
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
           vm.setThreadContext(threadContext)
+          console.log(threadContext)
         },
         function error (err) {
           vm.error = err
