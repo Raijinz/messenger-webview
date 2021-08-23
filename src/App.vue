@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>
+      <p v-if="error">Error: {{ error }}</p>
     </div>
     <router-view/>
   </div>
@@ -12,6 +13,11 @@ const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID
 
 export default {
   name: 'App',
+  data () {
+    return {
+      error: ''
+    }
+  },
   mounted () {
     const vm = this
 
@@ -22,7 +28,7 @@ export default {
           vm.$store.dispatch('threadContext/setThreadContext', threadContext)
         },
         function error (err) {
-          console.error(err)
+          vm.error = err
         }
       )
     }
