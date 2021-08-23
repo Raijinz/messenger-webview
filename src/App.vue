@@ -6,7 +6,7 @@
       <p>Support features:</p>
       <ul>
         <li
-          v-for="(feature, index) in features"
+          v-for="(feature, index) in supportFeatures"
           :key="index"
         >
           {{ feature }}
