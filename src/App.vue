@@ -3,6 +3,15 @@
     <div id="nav">
       <router-link to="/">Home</router-link>
       <p v-if="error">Error: {{ error }}</p>
+      <p>Support features:</p>
+      <ul>
+        <li
+          v-for="(feature, index) in features"
+          :key="index"
+        >
+          {{ feature }}
+        </li>
+      </ul>
     </div>
     <router-view/>
   </div>
@@ -17,6 +26,7 @@ export default {
   name: 'App',
   data () {
     return {
+      supportFeatures: [''],
       error: ''
     }
   },
@@ -25,6 +35,16 @@ export default {
 
     window.extAsyncInit = function () {
       const MessengerExtensions = window.MessengerExtensions
+
+      MessengerExtensions.getSupportedFeatures(
+        function success (result) {
+          vm.supportFeatures = result
+        },
+        function error (err) {
+          vm.error = err
+        }
+      )
+
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
           vm.setThreadContext(threadContext)
