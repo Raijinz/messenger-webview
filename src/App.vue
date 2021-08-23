@@ -20,7 +20,7 @@
 <script>
 import { mapActions } from 'vuex'
 
-const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID
+const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
 
 export default {
   name: 'App',
