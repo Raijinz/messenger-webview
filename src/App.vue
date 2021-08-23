@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID
 
 export default {
@@ -25,13 +27,18 @@ export default {
       const MessengerExtensions = window.MessengerExtensions
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
-          vm.$store.dispatch('threadContext/setThreadContext', threadContext)
+          vm.setThreadContext(threadContext)
         },
         function error (err) {
           vm.error = err
         }
       )
     }
+  },
+  methods: {
+    ...mapActions('threadContext', {
+      setThreadContext: 'setThreadContext'
+    })
   }
 }
 </script>
