@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const threadContextModule = {
+const threadContext = {
   namespaced: true,
   state: () => ({
     tid: '',
@@ -12,17 +12,17 @@ const threadContextModule = {
     signedRequest: ''
   }),
   mutations: {
-    setTID ({ tid }, payload) {
-      tid = payload
+    setTID (state, payload) {
+      state.tid = payload
     },
-    setThreadType ({ threadType }, payload) {
-      threadType = payload
+    setThreadType (state, payload) {
+      state.threadType = payload
     },
-    setPSID ({ psid }, payload) {
-      psid = payload
+    setPSID (state, payload) {
+      state.psid = payload
     },
-    setSignedRequest ({ signedRequest }, payload) {
-      signedRequest = payload
+    setSignedRequest (state, payload) {
+      state.signedRequest = payload
     }
   },
   actions: {
@@ -37,6 +37,6 @@ const threadContextModule = {
 
 export default new Vuex.Store({
   modules: {
-    threadContext: threadContextModule
+    threadContext
   }
 })
