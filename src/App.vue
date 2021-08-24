@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 
 const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
@@ -31,6 +31,11 @@ export default {
       supportFeatures: [''],
       error: ''
     }
+  },
+  computed: {
+    ...mapState('threadContext', {
+      psid: state => state.psid
+    })
   },
   mounted () {
     const vm = this
@@ -50,12 +55,35 @@ export default {
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
           vm.setThreadContext(threadContext)
-          vm.getProfile(threadContext.psid)
+          // vm.getProfile(threadContext.psid)
         },
         function error (err) {
           vm.error = err
         }
       )
+    }
+
+    window.fbAsyncInit = function () {
+      const FB = window.FB
+
+      FB.init({
+        appId: FACEBOOK_APP_ID,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v11.0'
+      })
+
+      FB.api(`/${vm.psid}`,
+        'GET',
+        { fields: 'id,name,first_name,last_name,profile_pic,locale,timezone,gender' },
+        function (response) {
+          console.log(response)
+          if (!response || response.error) {
+            console.log('Error')
+          } else {
+            vm.setUserProfile(response)
+          }
+        })
     }
   },
   methods: {
