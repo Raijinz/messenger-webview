@@ -77,10 +77,7 @@ export default {
         await vm.ensureSetPSID()
         FB.api(`/${vm.psid}`,
           'GET',
-          {
-            fields: 'id,name,first_name,last_name,profile_pic,locale,timezone,gender',
-            access_token: PAGE_ACCESS_TOKEN
-          },
+          { fields: 'id,name,first_name,last_name,profile_pic,locale,timezone,gender' },
           function (response) {
             console.log(response)
             if (!response || response.error) {
