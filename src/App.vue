@@ -63,7 +63,7 @@ export default {
       setThreadContext: 'setThreadContext'
     }),
     ...mapActions('userProfile', {
-      setUserProfile: 'setuserProfile'
+      setUserProfile: 'setUserProfile'
     }),
     async getProfile (psid) {
       try {
