@@ -76,7 +76,7 @@ export default {
             access_token: PAGE_ACCESS_TOKEN
           }
         })
-        this.setUserProfile(userProfileRes)
+        this.setUserProfile(userProfileRes.data)
       } catch (userProfileError) {
         console.error(userProfileError)
       }
