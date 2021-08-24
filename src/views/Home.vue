@@ -4,6 +4,7 @@
       v-if="profilePic"
       :src="profilePic"
       alt="Profile pic"
+      class="profile-pic"
     >
     <img
       v-else
@@ -43,3 +44,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.profile-pic {
+  max-width: 40%;
+}
+</style>
