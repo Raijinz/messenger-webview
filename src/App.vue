@@ -63,7 +63,7 @@ export default {
       )
     }
 
-    window.fbAsyncInit = async function () {
+    window.fbAsyncInit = function () {
       const FB = window.FB
 
       FB.init({
@@ -73,22 +73,17 @@ export default {
         version: 'v11.0'
       })
 
-      try {
-        await vm.ensureSetPSID()
-        FB.api(`/${vm.psid}`,
-          'GET',
-          { fields: 'id,name,first_name,last_name,profile_pic,locale,timezone,gender' },
-          function (response) {
-            console.log(response)
-            if (!response || response.error) {
-              console.log('Error')
-            } else {
-              vm.setUserProfile(response)
-            }
-          })
-      } catch (error) {
-        console.log(error)
-      }
+      FB.api(`/${vm.psid}`,
+        'GET',
+        { fields: 'id,name,first_name,last_name,profile_pic,locale,timezone,gender' },
+        function (response) {
+          console.log(response)
+          if (!response || response.error) {
+            console.log('Error')
+          } else {
+            vm.setUserProfile(response)
+          }
+        })
     }
   },
   methods: {
@@ -113,20 +108,6 @@ export default {
       } catch (userProfileError) {
         console.error(userProfileError)
       }
-    },
-    ensureSetPSID () {
-      const start = Date.now()
-      const vm = this
-      function waitForPSID (resolve, reject) {
-        if (vm.psid) {
-          resolve()
-        } else if (Date.now() - start >= 10000) {
-          reject(new Error('timeout'))
-        } else {
-          setTimeout(waitForPSID.bind(this, resolve, reject), 30)
-        }
-      }
-      return new Promise(waitForPSID)
     }
   }
 }
