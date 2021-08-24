@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link>
       <p v-if="error">Error: {{ error }}</p>
+      <p>Touchable: {{ touchable }}</p>
       <p>Support features:</p>
       <ul>
         <li
@@ -20,6 +21,7 @@
 <script>
 import { mapActions } from 'vuex'
 import axios from 'axios'
+import checkTouchScreen from '@/utils/checkTouchScreen.js'
 
 const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
 const PAGE_ACCESS_TOKEN = process.env.VUE_APP_PAGE_ACCESS_TOKEN
@@ -29,8 +31,12 @@ export default {
   data () {
     return {
       supportFeatures: [''],
-      error: ''
+      error: '',
+      touchable: false
     }
+  },
+  created () {
+    this.touchable = checkTouchScreen()
   },
   mounted () {
     const vm = this
