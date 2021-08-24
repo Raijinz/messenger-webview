@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import checkTouchScreen from '@/utils/checkTouchScreen'
+// import checkTouchScreen from '@/utils/checkTouchScreen'
+import checkMobileDevice from '@/utils/checkMobileDevice'
 
 Vue.use(VueRouter)
 
@@ -10,9 +11,10 @@ const routes = [
     name: 'Home',
     component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
     beforeEnter: (to, from, next) => {
-      const touchable = checkTouchScreen()
+      // const touchable = checkTouchScreen()
+      const isMobile = checkMobileDevice()
 
-      if (touchable) {
+      if (isMobile) {
         next()
       } else {
         next({ path: 'error' })
