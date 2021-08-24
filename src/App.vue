@@ -19,8 +19,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import axios from 'axios'
 
 const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
+const PAGE_ACCESS_TOKEN = process.env.VUE_APP_PAGE_ACCESS_TOKEN
 
 export default {
   name: 'App',
@@ -39,23 +41,19 @@ export default {
       MessengerExtensions.getSupportedFeatures(
         function success (result) {
           vm.supportFeatures = result.supported_features
-          console.log(result)
         },
         function error (err) {
           vm.error = err
-          console.log(err)
         }
       )
 
-      console.log(FACEBOOK_APP_ID)
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
           vm.setThreadContext(threadContext)
-          console.log(threadContext)
+          vm.getProfile(threadContext.psid)
         },
         function error (err) {
           vm.error = err
-          console.log(err)
         }
       )
     }
@@ -63,7 +61,26 @@ export default {
   methods: {
     ...mapActions('threadContext', {
       setThreadContext: 'setThreadContext'
-    })
+    }),
+    ...mapActions('userProfile', {
+      setUserProfile: 'setuserProfile'
+    }),
+    async getProfile (psid) {
+      try {
+        const userProfileRes = await axios({
+          url: `/${psid}`,
+          method: 'GET',
+          baseURL: 'https://graph.facebook.com/v11.0/',
+          params: {
+            fields: 'id,name,first_name,last_name,profile_pic,locale,timezone,gender',
+            access_token: PAGE_ACCESS_TOKEN
+          }
+        })
+        this.setUserProfile(userProfileRes)
+      } catch (userProfileError) {
+        console.error(userProfileError)
+      }
+    }
   }
 }
 </script>
