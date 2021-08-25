@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
+    <!-- <div id="nav">
       <p v-if="error">Error: {{ error }}</p>
       <p>Touchable: {{ touchable }}</p>
       <p>Mobile: {{ isMobile }}</p>
@@ -14,8 +13,8 @@
           {{ feature }}
         </li>
       </ul>
-    </div>
-    <router-view/>
+    </div> -->
+    <router-view />
   </div>
 </template>
 

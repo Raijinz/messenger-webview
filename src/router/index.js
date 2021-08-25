@@ -1,45 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import checkTouchScreen from '@/utils/checkTouchScreen'
-import checkMobileDevice from '@/utils/checkMobileDevice'
+import store from '@/store'
+import routes from './routes'
 
 Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
-    beforeEnter: (to, from, next) => {
-      // const touchable = checkTouchScreen()
-      const isMobile = checkMobileDevice()
-
-      if (isMobile) {
-        next()
-      } else {
-        next({ path: 'error' })
-      }
-    }
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
-  },
-  {
-    path: '/error',
-    name: 'Error',
-    component: () => import(/* webpackChunkName: "error" */ '@/views/Error.vue')
-  }
-]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  const authRequired = to.matched.some((route) => route.meta.authRequired)
+  if (!authRequired) return next()
+  if (store.state.threadContext.psid) return next()
+  next('/error')
 })
 
 export default router

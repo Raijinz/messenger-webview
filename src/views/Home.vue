@@ -8,7 +8,7 @@
     >
     <img
       v-else
-      src="@/assets/logo.png"
+      src="@/assets/images/logo.png"
       alt="Vue logo"
     >
     <p v-if="name">Hello, {{ name }}</p>
