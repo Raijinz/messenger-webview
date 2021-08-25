@@ -19,12 +19,11 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 import checkTouchScreen from '@/utils/checkTouchScreen'
 import checkMobileDevice from '@/utils/checkMobileDevice'
 
-const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
 const PAGE_ACCESS_TOKEN = process.env.VUE_APP_PAGE_ACCESS_TOKEN
 
 export default {
@@ -37,40 +36,17 @@ export default {
       isMobile: false
     }
   },
+  computed: {
+    ...mapState('threadContext', {
+      psid: state => state.psid
+    })
+  },
   created () {
     this.touchable = checkTouchScreen()
     this.isMobile = checkMobileDevice()
-  },
-  mounted () {
-    const vm = this
-
-    window.extAsyncInit = function () {
-      const MessengerExtensions = window.MessengerExtensions
-
-      MessengerExtensions.getSupportedFeatures(
-        function success (result) {
-          vm.supportFeatures = result.supported_features
-        },
-        function error (err) {
-          vm.error = err
-        }
-      )
-
-      MessengerExtensions.getContext(FACEBOOK_APP_ID,
-        function success (threadContext) {
-          vm.setThreadContext(threadContext)
-          vm.getProfile(threadContext.psid)
-        },
-        function error (err) {
-          vm.error = err
-        }
-      )
-    }
+    if (this.psid) this.getProfile(this.psid)
   },
   methods: {
-    ...mapActions('threadContext', {
-      setThreadContext: 'setThreadContext'
-    }),
     ...mapActions('userProfile', {
       setUserProfile: 'setUserProfile'
     }),
