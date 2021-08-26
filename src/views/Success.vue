@@ -8,6 +8,9 @@
       class="profile-pic"
     >
     <p v-if="name">Thank you, {{ name }}</p>
+    <p v-if="id">Your ID: {{ id }}</p>
+    <p v-if="firstName">First name: {{ firstName }}</p>
+    <p v-if="lastName">Last name: {{ lastName }}</p>
     <button
       type="button"
       @click="close"
@@ -34,7 +37,10 @@ export default {
   },
   computed: {
     ...mapState('userProfile', {
+      id: state => state.id,
       name: state => state.name,
+      firstName: state => state.firstName,
+      lastName: state => state.lastName,
       profilePic: state => state.profilePic
     })
   },

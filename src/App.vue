@@ -38,6 +38,7 @@ export default {
     }
   },
   created () {
+    const vm = this
     this.touchable = checkTouchScreen()
     this.isMobile = checkMobileDevice()
 
@@ -46,6 +47,7 @@ export default {
 
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
+          vm.setThreadContext('threadContext/setThreadContext', threadContext)
           this.getProfile(threadContext.psid)
         },
         function error (err) {
@@ -54,6 +56,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions('threadContext', {
+      setThreadContext: 'setThreadContext'
+    }),
     ...mapActions('userProfile', {
       setUserProfile: 'setUserProfile'
     }),

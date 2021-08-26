@@ -3,8 +3,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
-
 Vue.config.productionTip = false
 
 function initMessengerSDK () {
@@ -16,18 +14,6 @@ function initMessengerSDK () {
       js.src = '//connect.facebook.net/en_US/messenger.Extensions.js'
       fjs.parentNode.insertBefore(js, fjs)
     }(document, 'script', 'Messenger'))
-
-    window.extAsyncInit = function () {
-      const MessengerExtensions = window.MessengerExtensions
-
-      MessengerExtensions.getContext(FACEBOOK_APP_ID,
-        function success (threadContext) {
-          store.dispatch('threadContext/setThreadContext', threadContext)
-        },
-        function error (err) {
-          console.log(err)
-        })
-    }
 
     resolve()
   })
