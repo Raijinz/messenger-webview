@@ -24,7 +24,7 @@ import axios from 'axios'
 import checkTouchScreen from '@/utils/checkTouchScreen'
 import checkMobileDevice from '@/utils/checkMobileDevice'
 
-const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID
+const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
 const PAGE_ACCESS_TOKEN = process.env.VUE_APP_PAGE_ACCESS_TOKEN
 
 export default {
