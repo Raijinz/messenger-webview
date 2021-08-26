@@ -58,7 +58,7 @@ export default {
 
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
-          vm.setThreadContext('threadContext/setThreadContext', threadContext)
+          vm.setThreadContext(threadContext)
           vm.getProfile(threadContext.psid)
         },
         function error (err) {
