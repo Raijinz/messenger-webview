@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
+    <div id="nav">
       <p v-if="error">Error: {{ error }}</p>
       <p>Touchable: {{ touchable }}</p>
       <p>Mobile: {{ isMobile }}</p>
@@ -13,7 +13,7 @@
           {{ feature }}
         </li>
       </ul>
-    </div> -->
+    </div>
     <router-view />
   </div>
 </template>
@@ -38,12 +38,23 @@ export default {
     }
   },
   created () {
-    const vm = this
     this.touchable = checkTouchScreen()
     this.isMobile = checkMobileDevice()
+  },
+  mounted () {
+    const vm = this
 
     window.extAsyncInit = function () {
       const MessengerExtensions = window.MessengerExtensions
+
+      MessengerExtensions.getSupportedFeatures(
+        function success (result) {
+          vm.supportFeatures = result.supported_features
+        },
+        function error (err) {
+          vm.error = err
+        }
+      )
 
       MessengerExtensions.getContext(FACEBOOK_APP_ID,
         function success (threadContext) {
