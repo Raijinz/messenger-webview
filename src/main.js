@@ -2,28 +2,20 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import MSGPlugin from './plugins/messenger-plugin'
+
+const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
+const PAGE_ACCESS_TOKEN = process.env.VUE_APP_PAGE_ACCESS_TOKEN
 
 Vue.config.productionTip = false
 
-function initMessengerSDK () {
-  return new Promise((resolve, reject) => {
-    (function (d, s, id) {
-      var js; var fjs = d.getElementsByTagName(s)[0]
-      if (d.getElementById(id)) { return }
-      js = d.createElement(s); js.id = id
-      js.src = '//connect.facebook.net/en_US/messenger.Extensions.js'
-      fjs.parentNode.insertBefore(js, fjs)
-    }(document, 'script', 'Messenger'))
-
-    resolve()
-  })
-}
+Vue.use(MSGPlugin, {
+  appId: FACEBOOK_APP_ID,
+  pageToken: PAGE_ACCESS_TOKEN
+})
 
 new Vue({
   router,
   store,
-  render: h => h(App),
-  async created () {
-    await initMessengerSDK()
-  }
+  render: h => h(App)
 }).$mount('#app')

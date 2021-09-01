@@ -19,13 +19,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import axios from 'axios'
 import checkTouchScreen from '@/utils/checkTouchScreen'
 import checkMobileDevice from '@/utils/checkMobileDevice'
-
-const FACEBOOK_APP_ID = process.env.VUE_APP_FACEBOOK_APP_ID
-const PAGE_ACCESS_TOKEN = process.env.VUE_APP_PAGE_ACCESS_TOKEN
 
 export default {
   name: 'App',
@@ -40,55 +35,6 @@ export default {
   created () {
     this.touchable = checkTouchScreen()
     this.isMobile = checkMobileDevice()
-  },
-  mounted () {
-    const vm = this
-
-    window.extAsyncInit = function () {
-      const MessengerExtensions = window.MessengerExtensions
-
-      MessengerExtensions.getSupportedFeatures(
-        function success (result) {
-          vm.supportFeatures = result.supported_features
-        },
-        function error (err) {
-          vm.error = err
-        }
-      )
-
-      MessengerExtensions.getContext(FACEBOOK_APP_ID,
-        function success (threadContext) {
-          vm.setThreadContext(threadContext)
-          vm.getProfile(threadContext.psid)
-        },
-        function error (err) {
-          console.log(err)
-        })
-    }
-  },
-  methods: {
-    ...mapActions('threadContext', {
-      setThreadContext: 'setThreadContext'
-    }),
-    ...mapActions('userProfile', {
-      setUserProfile: 'setUserProfile'
-    }),
-    async getProfile (psid) {
-      try {
-        const userProfileRes = await axios({
-          url: `/${psid}`,
-          method: 'GET',
-          baseURL: 'https://graph.facebook.com/v11.0/',
-          params: {
-            fields: 'id,name,first_name,last_name,profile_pic,locale,timezone,gender',
-            access_token: PAGE_ACCESS_TOKEN
-          }
-        })
-        this.setUserProfile(userProfileRes.data)
-      } catch (userProfileError) {
-        console.error(userProfileError)
-      }
-    }
   }
 }
 </script>
