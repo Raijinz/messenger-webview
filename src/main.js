@@ -11,7 +11,8 @@ Vue.config.productionTip = false
 
 Vue.use(MSGPlugin, {
   appId: FACEBOOK_APP_ID,
-  pageToken: PAGE_ACCESS_TOKEN
+  pageToken: PAGE_ACCESS_TOKEN,
+  store
 })
 
 new Vue({
