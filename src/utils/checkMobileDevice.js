@@ -10,7 +10,6 @@ export function checkMobileDevice () {
 
   // Fallback
   const userAgent = navigator.userAgent
-  const maxTouchPoints = navigator.maxTouchPoints
 
   // Android: Tablet & Mobile
   if (/Android/i.test(userAgent)) {
