@@ -17,17 +17,6 @@ export function checkMobileDevice () {
     return /Mobi/i.test(userAgent)
   }
 
-  // Apple & WebOS
-  let isMobile = /webOS|iPhone|iPod|iPad/i.test(userAgent)
-
-  // Confusingly, iPad with iPadOS will use 'Macintosh' as a user-agent
-  if (!isMobile) {
-    const isMac = /Macintosh/i.test(userAgent)
-
-    if (isMac && maxTouchPoints && maxTouchPoints > 2) {
-      isMobile = true
-    }
-  }
-
-  return isMobile
+  // Apple
+  return /iPhone|iPod/i.test(userAgent)
 }
