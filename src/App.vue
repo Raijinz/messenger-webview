@@ -20,7 +20,7 @@
 
 <script>
 import checkTouchScreen from '@/utils/checkTouchScreen'
-import checkMobileDevice from '@/utils/checkMobileDevice'
+import { checkMobileDevice } from '@/utils/checkMobileDevice'
 
 export default {
   name: 'App',
