@@ -4,6 +4,7 @@
       <p v-if="error">Error: {{ error }}</p>
       <p>Touchable: {{ touchable }}</p>
       <p>Mobile: {{ isMobile }}</p>
+      <p>User-Agent: {{ userAgent }}</p>
       <p>Support features:</p>
       <ul>
         <li
@@ -29,10 +30,12 @@ export default {
       supportFeatures: [''],
       error: '',
       touchable: false,
-      isMobile: false
+      isMobile: false,
+      userAgent: ''
     }
   },
   created () {
+    this.userAgent = navigator.userAgent
     this.touchable = checkTouchScreen()
     this.isMobile = checkMobileDevice()
   }
