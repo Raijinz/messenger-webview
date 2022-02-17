@@ -6,8 +6,7 @@
     "start": "node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "postinstall": "npm run build"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -36,7 +35,6 @@
     "vue-template-compiler": "^2.6.11"
   },
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "16.x"
   }
 }
