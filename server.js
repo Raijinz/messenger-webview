@@ -10,6 +10,9 @@ app.use(helmet({
     directives: {
       'frame-ancestors': ["'self'", 'https://www.facebook.com/', 'https://www.messenger.com/']
     }
+  },
+  frameguard: {
+    action: 'deny'
   }
 }))
 app.use(express.static(path.join(__dirname, 'dist')))
