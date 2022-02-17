@@ -5,7 +5,13 @@ const helmet = require('helmet')
 
 const app = express()
 app.use(history())
-app.use(helmet())
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      'frame-ancestors': ["'self'", 'https://www.facebook.com/', 'https://www.messenger.com/']
+    }
+  }
+}))
 app.use(express.static(path.join(__dirname, 'dist')))
 
 const port = process.env.PORT || 8000
