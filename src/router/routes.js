@@ -1,4 +1,4 @@
-import isMobile from '@/utils/checkMobileDevice'
+import { checkMobileDevice as isMobile } from '@/utils/checkMobileDevice'
 
 export default [
   {
