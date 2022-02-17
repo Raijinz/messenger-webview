@@ -5,6 +5,7 @@
       <p>Touchable: {{ touchable }}</p>
       <p>Mobile: {{ isMobile }}</p>
       <p>User-Agent: {{ userAgent }}</p>
+      <p>window.name: {{ name }}</p>
       <p>Support features:</p>
       <ul>
         <li
@@ -31,13 +32,15 @@ export default {
       error: '',
       touchable: false,
       isMobile: false,
-      userAgent: ''
+      userAgent: '',
+      name: ''
     }
   },
   created () {
     this.userAgent = navigator.userAgent
     this.touchable = checkTouchScreen()
     this.isMobile = checkMobileDevice()
+    this.name = window.name
   }
 }
 </script>
